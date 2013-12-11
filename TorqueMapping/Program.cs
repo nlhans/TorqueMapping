@@ -97,6 +97,8 @@ namespace ThrottleHelper
                     p = 1 - p;
                     ppjoy1.PostData(axis, buttons);
                     System.Threading.Thread.Sleep(5);
+
+                    // This can be removed at a later stage.
                     if (FunnyRevLimit && rpm > rpm_funny)
                         System.Threading.Thread.Sleep(75);
                     if (Console.KeyAvailable)
@@ -136,7 +138,7 @@ namespace ThrottleHelper
                 prevmap = d;
             }
 
-            // INTERPOLATE FUCKING SHIT
+            // Interpolate curves
             var prevthrottle = map1.FirstOrDefault();
             var percents1 = new double[2] {0, 0};
             var percents2 = new double[2] {0, 0};
@@ -164,7 +166,7 @@ namespace ThrottleHelper
             }
 
 
-            // OKAY DO FUCKING THROTTLE MAPPING
+            // The magic happens here
             double factor = duty_y*(duty_x*percents1[1] + (1 - duty_x)*percents1[0])
                             + (1 - duty_y)*(duty_x*percents2[1] + (1 - duty_x)*percents2[0]);
 
